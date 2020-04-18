@@ -39,3 +39,12 @@ match ()-[]->(n1) return count (n1)
 
 match (n1:Musico)-[r]-(n2:Musica)
 return n1, type(r),n2
+    //Changing some property
+
+match()-[r]-()
+delete r
+    //delete all the relationships
+
+match(n)
+delete n
+    //delete all the nodes
