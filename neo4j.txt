@@ -1,18 +1,39 @@
 neo4j
+
+create (dylan:Musico {nome: 'Bob Dylan', data_de_nascimento:'1941-05-24'})
+    //creating a new node with cypher
+
+match (n) return n limit 25
+    //match everything until 25th element
+
+match (n:Musico)
+where n.nome = 'Bod Dylan'
+return n.nome
+    //matching a specific consultation (where) or
+
+match (n:Musico{nome:'Bod Dylan'})
+return n.nome
+
 match (bob:Musico {nome : "Bod Dylan"}), 
 (al_along:Musica{nome:"All Along the Watchtower"}) 
 create (bob)-[r:GRAVOU]->(al_along) 
 create (bob)-[s:COMPOS]->(al_along)
-#This is a code to create a relatio  between two nodes
+    //This is a code to create a relatio  between two nodes and
+
+match (bob:Musico {nome : "Bob Dylan"}), 
+(al_along:Musica{nome:"All Along the Watchtower"}) 
+create (bob)-[r:GRAVOU]->(al_along) 
+create (bob)-[s:COMPOS]->(al_along)
+    //This is a code to create a relatio  between two nodes
 
 match(n1)-[]-() return n1
-#this code is used to get all the relations
+    //this code is used to get all the relations
 
 match (n1)-[]->() return n1
-#this code returns the relations specified with a direction
+    //this code returns the relations specified with a direction
 
 match ()-[]->(n1) return n1
-#this code returns the relations specified with a direction, now it's the input
+    //this code returns the relations specified with a direction, now it's the input
 
 match ()-[]->(n1) return count (n1)
 
