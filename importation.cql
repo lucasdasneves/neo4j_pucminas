@@ -1,3 +1,9 @@
+load csv with headers
+from "file:///composicoes.csv"
+as linha
+return linha
+    //this code is used to import and to consult the importantion
+
 load csv with Headers
 from "file:///composicoes.csv"
 as linha

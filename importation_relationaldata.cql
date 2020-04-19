@@ -1,15 +1,42 @@
-load csv with Headers
-from "file:///composicoes.csv"
-as linha
-merge (compositor:Musico{none:linha.compositor})
-merge (musica:Musica{nome: linha.musica})
-merge (compositor)-[:COMPOS]->(musica)
-    //merge is used to avoid to create the same node over and over
+match (n) 
+optional match (n)-[rel]-() 
+delete rel, n
+    //this code is used to delete all the database
 
-load csv with headers
-from "file:///gravacoes.csv"
-as linha
-merge(interprete:Musico{nome:linha.interprete})
-merge(musica:Musica{nome:linha.musica})
-merge(interprete)-[:GRAVOU]->(musica)
-    //merge and load again
+load csv with headers from "file:///products.csv" as row
+return row
+    //this code is used to consult what is in the bank
+
+
+load csv with headers from "file:///products.csv" as row
+create (n:Product)
+set n = row,
+n.unitPrice = toFloat(row.unitPrice),
+n.unitsInStock = toInteger(row.unitsInStock),
+n.unitsOnOrder = toInteger(row.unitsOnOrder),
+n.reorderLevel = toInteger(row.reorderLevel),
+n.discontinued = (row.discontinued <> "0")
+    //this code is used to import files (I didn't understand some codes)
+
+load csv with headers from "file:///categories.csv" as row
+create (n:Category)
+set n = row
+
+load csv with headers from "file:///suppliers.csv" as row
+create (n:Supplier)
+set n = row
+
+CREATE INDEX ON :Product(productID)
+CREATE INDEX ON :Category(categoryID)
+CREATE INDEX ON :Supplier(supplierID)
+
+match (p:Product),(c:Category)
+where p.categoryID = c.categoryID
+create (p)-[:PART_OF]->(c)
+
+match (p:Product),(s:Supplier)
+where p.supplierID = s.supplierID
+create (s)-[:SUPPLIES]->(p)
+
+MATCH (s:Supplier)-->(:Product)-->(c:Category)
+RETURN s.companyName AS Company, collect(DISTINCT c.categoryName) AS Categories
