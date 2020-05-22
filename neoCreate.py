@@ -1,4 +1,4 @@
-from neo4jrestclient.client import GraphDatabase
+from py2neo import Graph
 
 db = GraphDatabase("http://localhost:7474", username="neo4j", password="123")
 
